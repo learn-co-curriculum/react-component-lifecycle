@@ -17,7 +17,7 @@ These methods are only called once when the compoment is initially created.
 ### componentWillMount
 **componentWillMount** is called only once in the component lifecycle, immediately before the render method is executed. It is usually used to perform any state changes needed before the initial render, because calling `this.setState` in this method will not trigger another re-render despite the state change, so the rendering will only occur once. The use-cases for this are quite subtle, but for example, suppose you wanted to keep the dateTime of when the component was created in your component state, you could set this up in `componentWillMount`.
 
-```
+```javascript
 componentWillMount: function(){
   this.setState({ startDateTime: new Date(Date.now())});
 }
@@ -28,7 +28,7 @@ componentWillMount: function(){
 
 Suppose we were building a weather app which fetches current weather data and displays it to the user. We would want this data to update every 15 seconds without the user having to refresh the page. **componentDidMount** to the rescue!
 
-```
+```javascript
 componentDidMount: function(){
   this.interval = setInterval(this.fetchWeather, 15000);
 }
@@ -44,7 +44,7 @@ These methods are called every time a re-render is triggered.
 ### componentWillReceiveProps
 **componentWillReceiveProps** is invoked when the component is receiving new props. This function is not called in the initial render. As with **componentWillMount**, calling `this.setState` here does not trigger an additional re-render, so this function is primarily used for any state changes necessary due to receiving new props.
 
-```
+```javascript
 componentWillReceiveProps: function(nextProps){
   this.setState({ temeratureIncreasing: nextProps.temperature > this.props.temperature })
 }
@@ -57,7 +57,7 @@ It should be noted that there is no equivalent method for state changes such as 
 
 Suppose you have a React component which has a `temperature` prop and you want to re-render the component only if the `temperature` has changed. This is where the **shouldComponentUpdate** function comes in handy:
 
-```
+```javascript
 shouldComponentUpdate: function(nextProps, nextState){
   return this.props.temperature !== nextProps.temperature;
 }
@@ -69,7 +69,7 @@ shouldComponentUpdate: function(nextProps, nextState){
 ### componentWillUpdate
 **componentWillUpdate** is called immediately after **shouldComponentUpdate** returns true. No state changes are allowed in this method and it should be used solely for preparing for the upcoming update, not trigger one. One of the more common uses of **componentWillUpdate** is to to call an action, set a variable or start an animation (not in the state) based on state changes. For example, the code below will dispatch some action based on a state change.
 
-```
+```javascript
 componentWillUpdate(nextProps, nextState) {
   if (nextState.open === true && this.state.open === false) {
     this.props.onOpen();
@@ -82,7 +82,7 @@ componentWillUpdate(nextProps, nextState) {
 
 **componentDidUpdate** isn't used an awful lot in everyday development, but could be used with interacting with third party libraries when they need an update due to the component re-render (e.g. new data for charting libraries).
 
-```
+```javascript
 componentDidUpdate(prevProps, prevState) {
   if (prevProps.height !== this.props.height) {
     someChartLibrary.updateHeight(this.props.height);
@@ -97,7 +97,7 @@ This method is called only once, just before the component is removed.
 ### componentWillUnmount
 **componentWillUnmount** is the last function to be called immediately before the component is removed from the DOM. It is generally used to perform clean-up for any DOM-elements or timers created in **componentWillMount**. Recall, for **componentWillMount** we set up a timer to re-fetch our weather data every 15 seconds. Before the React component is removed from the DOM, we would need to clean up after ourselved and remove the interval.
 
-```
+```javascript
 componentWillUnmount: function(){
   clearInterval(this.interval);
 }
