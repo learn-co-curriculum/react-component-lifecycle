@@ -37,13 +37,22 @@ componentDidMount: function(){
 }
 ```
 
-Here, `fetchWeather()` is another function in the React component, which calls a weather API and updates the state using `this.setState()` which will trigger a re-render of the react component with the new state.
+Here, `fetchWeather()` is another function in the React component, which calls a weather API and updates the state using `this.setState()` which will trigger a re-render of the React component with the new state.
 
-It is very important that if any DOM manipulation or asyncronous calls have been set up in this function, they are cleaned up later in `componentWillUnmount` (discussed below). Failing to do so will pollute the DOM and can cause unintented consequences, including even possibly crashing your carefully crafted website!
+It is vital that if any DOM manipulation or asyncronous calls have been set up in this function, they are cleaned up later in `componentWillUnmount` (discussed below). Failing to do so will pollute the DOM and can cause unintented consequences, including even possibly crashing your carefully crafted website!
 
 ## Updating
 
 ### componentWillReceiveProps
+**componentWillReceiveProps** is invoked when the component is receiving new props. This function is not called in the initial render. As with **componentWillMount**, calling `this.setState` here does not trigger an additional re-render, so this function is primarily used for any state changes necessary due to receiving new props.
+
+```
+componentWillReceiveProps: function(nextProps){
+  this.setState({ temeratureIncreasing: nextProps.temperature > this.props.temperature })
+}
+```
+
+It should be noted that there is no equivalent method for state changes such as **componentWillReceiveState**, because a new prop might trigger a state change, but the opposite can never be true - a component can never mutate its own props. If any actions are required to be performed in reponse to state change, this can be done in **componentWillUpdate**.
 
 ### shouldComponentUpdate
 **shouldComponentUpdate** is called every time the component is about to re-render, immediately before the `render()` method. It is not called on the initial render. The component's next props and next state get passed into the function and it will need to return a boolean value for whether or not a re-render should take place. Any update to the component's state or any change in any of its parent components could potentially trigger a re-render, so this method can be used to prevent unnecessary re-renders.
@@ -51,7 +60,6 @@ It is very important that if any DOM manipulation or asyncronous calls have been
 Suppose you have a React component which has a `temperature` prop and you want to re-render the component only if the `temperature` has changed. This is where the **shouldComponentUpdate** function comes in handy:
 
 ```
-
 shouldComponentUpdate: function(nextProps, nextState){
   return this.props.temperature !== nextProps.temperature;
 }
@@ -61,8 +69,28 @@ shouldComponentUpdate: function(nextProps, nextState){
 
 
 ### componentWillUpdate
+**componentWillUpdate** is called immediately after **shouldComponentUpdate** returns true. No state changes are allowed in this method and it should be used solely for preparing for the upcoming update, not trigger one. One of the more common uses of **componentWillUpdate** is to to call an action, set a variable or start an animation (not in the state) based on state changes. For example, the code below will dispatch some action based on a state change.
+
+```
+componentWillUpdate(nextProps, nextState) {
+  if (nextState.open === true && this.state.open === false) {
+    this.props.onOpen();
+  }
+}
+```
 
 ### componentDidUpdate
+**componentDidUpdate** is called immediately after the re-render has occurred. The arguments passed into the function is slightly different: we get access to `prevProps` and `prevState` as the arguments passed into **componentWillUpdate**, `nextProps` and `nextState` have become the current props and state and can be accessed with `this.props` and `this.state`. **componentDidUpdate** is used to manipulate the DOM following the render. Calling this.setState is allowed in **componentDidUpdate**, but err on the side of caution, as you can easily end in an infinite loop of re-renders.
+
+**componentDidUpdate** isn't used an awful lot in everyday development, but could be used with interacting with third party libraries when they need an update due to the component re-render (e.g. new data for charting libraries).
+
+```
+componentDidUpdate(prevProps, prevState) {
+  if (prevProps.height !== this.props.height) {
+    someChartLibrary.updateHeight(this.props.height);
+  }
+}
+```
 
 
 ## Unmounting
@@ -75,8 +103,6 @@ componentWillUnmount: function(){
   clearInterval(this.interval);
 }
 ```
-
-
 
 
 
