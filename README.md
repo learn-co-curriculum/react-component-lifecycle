@@ -7,22 +7,19 @@
 
 ## Overview
 
-This lesson is a very high-level over view of the React component lifecycle. We
-want to walk students through the whole shebang.
+The `render()` method, which returns the actual code to render into the DOM, is the only mandatory built-in method for React compoments. However, there are a hole host of other lifecycle methods which are pre-configured to run at specific times in the component lifecycle and you can hook into as many or as few of these as you like. These methods are called on initial render, when new props are received or when the component has just finished updating etc. They are designed for you to enable to perform any desired state or DOM manipulations at certain times in the component lifecycle. There are best practices for what kind of actions you could (should) be performing in which method and we will go through all of these in detail.
 
-It might be helpful to break the cycle down into mounting (happens once),
-rendering (happens a bazillion times), and unmounting (happens once) phases.
-
-
+The React lifecycle methods fall into 3 categories: Mounting, Rendering and Unmounting. The Mounting and Unmounting methods are only called once, when the component is first created and drestroyed respectively. The Updating methods are never called on initial render, but are called on every subsequent one until the Unmounting.
 
 ## Mounting
+These methods are only called once when the compoment is initially created.
 
 ### componentWillMount
-**componentWillMount** is called only once in the component lifecycle, immediately before the render method is executed. It is usually used to perform any state changes needed before the initial render, as calling `this.setState` in this method will not trigger another re-render despite the state change, so the rendering will only occur once. The use-cases for this are quite subtle, but for example, suppose you wanted to keep the dateTime of when the component was created in your component state, you could set this up in `componentWillMount`.
+**componentWillMount** is called only once in the component lifecycle, immediately before the render method is executed. It is usually used to perform any state changes needed before the initial render, because calling `this.setState` in this method will not trigger another re-render despite the state change, so the rendering will only occur once. The use-cases for this are quite subtle, but for example, suppose you wanted to keep the dateTime of when the component was created in your component state, you could set this up in `componentWillMount`.
 
 ```
 componentWillMount: function(){
-  this.setState({ startDateTime: new Date(Date.now())})
+  this.setState({ startDateTime: new Date(Date.now())});
 }
 ```
 
@@ -42,6 +39,7 @@ Here, `fetchWeather()` is another function in the React component, which calls a
 It is vital that if any DOM manipulation or asyncronous calls have been set up in this function, they are cleaned up later in `componentWillUnmount` (discussed below). Failing to do so will pollute the DOM and can cause unintented consequences, including even possibly crashing your carefully crafted website!
 
 ## Updating
+These methods are called every time a re-render is triggered.
 
 ### componentWillReceiveProps
 **componentWillReceiveProps** is invoked when the component is receiving new props. This function is not called in the initial render. As with **componentWillMount**, calling `this.setState` here does not trigger an additional re-render, so this function is primarily used for any state changes necessary due to receiving new props.
@@ -65,7 +63,7 @@ shouldComponentUpdate: function(nextProps, nextState){
 }
 ```
 
-**NOTE:** you might think it'd be a good idea to use the `shouldComponentUpdate` function to only re-render the component if *any* of the props have changed and avoid *all* redundant re-renders, e.g. if `this.props !== nextProps`. However, because `props` and `nextProps` are both JavaScript objects, this comparison will always return `true`, that is `{} === {}` is never `true` in JavaScript (object equality is one of the many JavaScript quirks you'll need to know about. The reasons behind it are a bit too advanced to explain at this stage, it's enough just to be aware of it. Further reading [here](http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html) if you're interested). There's ways to get around this restriction either by stringifying both objects or by doing a deep compare (compare each attribute of the object individually), but both of those operations are rather expensive, especially for big objects, and would be significantly more memory-intensive than an "unnecessary" re-render.
+**NOTE:** you might think it'd be a good idea to use the `shouldComponentUpdate` function to only re-render the component if *any* of the props have changed and avoid *all* redundant re-renders, e.g. if `this.props !== nextProps`. However, because `props` and `nextProps` are both JavaScript objects, this comparison will always return `true`, that is `{} === {}` is never `true` in JavaScript (object equality is one of the many JavaScript quirks you'll need to know about as a developer. The reasons behind it are a bit too advanced to explain at this stage, it's enough just to be aware of it. Further reading [here](http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html) if you're interested). There's ways to get around this restriction either by stringifying both objects or by doing a deep compare (compare each attribute of the object individually), but both of those operations are rather expensive, especially for big objects, and would be significantly more memory-intensive than an "unnecessary" re-render.
 
 
 ### componentWillUpdate
@@ -94,6 +92,7 @@ componentDidUpdate(prevProps, prevState) {
 
 
 ## Unmounting
+This method is called only once, just before the component is removed.
 
 ### componentWillUnmount
 **componentWillUnmount** is the last function to be called immediately before the component is removed from the DOM. It is generally used to perform clean-up for any DOM-elements or timers created in **componentWillMount**. Recall, for **componentWillMount** we set up a timer to re-fetch our weather data every 15 seconds. Before the React component is removed from the DOM, we would need to clean up after ourselved and remove the interval.
@@ -105,6 +104,37 @@ componentWillUnmount: function(){
 ```
 
 
+## Summary
+If you need a lifecycle hook, there's one for your every need! Even though the React framework doesn't necessarily force you to use them as described above, but it's generally good practice to use them as they were intended as doing otherwise may lead to undesirable consequences.
+
+### Mounting lifecycle methods
+Called once on initial render:
+
+| Method             | nextProps | nextState | can call this.setState | called when?               | used for                                                                                    |
+|--------------------|:---------:|:---------:|:----------------------:|:--------------------------:|:-------------------------------------------------------------------------------------------:|
+| **componentWillMount** |     no    |     no    |           yes          | once, just before mounting | setting initial state based on props                                                        |
+| **componentDidMount**  |     no    |     no    |           no           | once, just after monuting  | setting up side effects (e.g. creating new DOM elements or setting up asyncronous functions |
+
+
+### Updating lifecycle methods
+Not called on initial render, but always called whenever a subsequent re-render is triggered:
+
+|           Method          | nextProps | nextState | can call this.setState |                       called when?                      |                                     used for                                     |
+|:-------------------------:|:---------:|:---------:|:----------------------:|:-------------------------------------------------------:|:--------------------------------------------------------------------------------:|
+| **componentWillReceiveProps** |    yes    |     no    |           yes          |  many times, whenever component is receiving new props  |                     applying state changes based on new props                    |
+|   **shouldComponentUpdate**   |    yes    |    yes    |           no           |    many times, whenver a rerender has been triggered    |    deciding based on new & old props & state whether a re-render should occur    |
+|    **componentWillUpdate**    |    yes    |    yes    |           no           | many times, when new state and props are being received | prepare for the update, dispatch any actions or animations based on state change |
+|     **componentDidUpdate**    |    yes*   |    yes*   |           yes          |    many times, just after the re-render has finished    | any DOM updates folloring a render (mostly interacting with 3rd party libraries) |
+
+\* **componentDidUpdate** will actually receive `prevProps` and `prevState` as arguments, as the newly applied state and props can be accessed through `this.props` and `this.state`.
+
+
+### Dismounting lifecycle method
+Called only once, just before the component is removed form the DOM:
+
+|        Method        | nextProps | nextState | can call this.setState |                     called when?                    |                         used for                        |
+|:--------------------:|:---------:|:---------:|:----------------------:|:---------------------------------------------------:|:-------------------------------------------------------:|
+| **componentWillUnmount** |     no    |     no    |           no           | once, just before component is removed form the DOM | destroying and side effects set up in componentDidMount |
 
 ## Resources
 
