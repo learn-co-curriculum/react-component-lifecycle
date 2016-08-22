@@ -7,20 +7,30 @@
 
 ## Overview
 
-As you've learned previously, a React component has two sets of properties: **props** and **state**. Props are given to the component by it's parent. You can think of props as an external influence that the component has no control over - like the weather. The other set of properties the component has is called the state. A component's state is internal to the component and it can change when the props changing or the user interacting with the component. For example, if the weather went from sunny to raining, you would put on a raincoat and wellies. In React component terms, your state could go from "wearing a jacket" to "wearing a raincoat and wellies". You know to put on a raincoat when it's raining because you've been told by your parents. A React component would have to be told what to do by the programmer - that's you! :)
+React components have two sets of properties: **props** and **state**. Props are given to the component by it's parent. You can think of props as an external influence that the component has no control over whereas a component's state is internal to the component. A component's state can change in conjunction to the props changing or when the user interacts with the component.
 
-React components go through what we call a **component lifecycle**. This is broadly divided into three parts: **creation**, **updating** and **deletion**. The React framework was actually created by the social networking site Facebook because they needed a more *reactive* (see what they did there?) way to display information to their users. This means that every single thing you see on Facebook is actually a React component and/or a part of one! So for example, if you open a new chat window on, a ChatWindow component is **created**. As you are interacting with it and sending messages to your friends - that's the **updating** part. And when you finally close the window, the React component gets **deleted**. It seems all pretty straightforward from the user's perspective, however as you'll soon find out, there's a lot of stuff going on behind the scenes.
+The React framework was designed to enable developers to create complex and highly reactive UIs. This enables the components to quickly adapt to changes from user interactions or updates in the app. In order to enable this, React components go through what we call a **component lifecycle**. This is broadly divided into three parts: **creation**, **updating** and **deletion**.
 
-As a developer, you get access to certain built-in events in the React component lifecycle. Essentially these are opportunities for you to change the component's state based on new props or other parameters.
+This means that every single thing you see on websites written in React is actually a React component and/or a part of one! For example, if you open a new chat window in a website written in React on, a ChatWindow component is **created**. As you are interacting with it and sending messages to your friends - that's the **updating** part. And when you finally close the window, the React component gets **deleted**.
+
+It seems all pretty straightforward from the user's perspective, however as you'll soon find out, there's a lot of stuff going on behind the scenes.
+
+## Lifecycle hooks and rendering
+In order to enable this quick reacting and updating, as a developer, you get access to certain built-in events in the React component lifecycle called **lifecycle hooks** or **lifecycle methods**. These are opportunities for you to change how the component reacts or doesn't react to various changes in your app.
+
+These methods are called *lifecycle* methods, because they are called at different times in the components lifecycle - just before it's created, after it's created, when it's about to be deleted, when a user interaction has propted an internal change etc.
+
+The only required method for a React component to be valid is the `render()` method which describes what the HTML for the component looks like. There are a whole host of optional methods you can use if you need more control over how the component responds to change.
 
 ## Mounting
-When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are two *lifecycle hooks* you can use: **componentWillMount** and **componentDidMount**. Remember, the only required method for a React component is the `render()` method which describes what the HTML for the component looks like. **componentWillMount** will get called just before `render()` so you can use it to change the initial state if you need to, whereas **componentDidMount** will get called just after the `render()` method. You would use this method to set up any long-running processes such as fetching and updating data.
+When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are two *lifecycle hooks* you can use: **componentWillMount** and **componentDidMount**. 
 
-## Unmounting
-At the unmounting stage, the component gets deleted and cleared out of the page. The only lifecycle hook at this stage is **componentWillUnmount**, which is called just before the component gets deleted. This is used to clear out any stuff set up in **componentDidMount**. For example, if you had a component that displays the weather data in your home town, you might have set it up to re-fetch the updated weather information every 10 seconds in **componentDidMount**. When the component gets deleted, you wouldn't want to continue doing this data-fetching, so you'd have to get rid of what was set up in **componentWillUnmount**. We will look at a detailed example of how it's done in the next module.
+**componentWillMount** will get called just before `render()` so you can use it to change the initial state if you need to, whereas **componentDidMount** will get called just after the `render()` method. You would use this method to set up any long-running processes such as fetching and updating data.
 
 ## Updating
-Whenever a component's state or props are changed, it gets re-rendered on the page. That's the beauty of React components - they're quick to *react* to changes. A re-render could be triggered when a user interacts with the component, or if new data (props or state) are passed in. For example, going back to the chat window on Facebook example, whenever you press "send" on a message, the ChatWindow component gets re-rendered as it needs to display an extra message. Whenever a re-render is triggered, there is a whole host of lifecycle hooks which get called. You can choose to use any of these to decide how your React component should respond to changes.
+Whenever a component's state or props are changed, it gets re-rendered on the page. That's the beauty of React components - they're quick to *react* to changes. A re-render could be triggered when a user interacts with the component, or if new data (props or state) are passed in.
+
+For example, going back to the chat window example, whenever you press "send" on a message, the ChatWindow component gets re-rendered as it needs to display an extra message. Whenever a re-render is triggered, there is a whole host of lifecycle hooks which get called. You can choose to use any of these to decide how your React component should respond to changes.
 
 **componentWillReceiveProps** is invoked when the props the parent is passing into the component have changed. You could use this to change the component's state based on the new props.
 
@@ -30,8 +40,13 @@ Whenever a component's state or props are changed, it gets re-rendered on the pa
 
 **componentDidUpdate** is called just after the new component had been rendered. You will have access to the previous props and state as well as the current ones, and you can use this method to update any third party libraries if they happen to need an update due to the re-render.
 
+## Unmounting
+At the unmounting stage, the component gets deleted and cleared out of the page. The only lifecycle hook at this stage is **componentWillUnmount**, which is called just before the component gets deleted. This is used to clear out any stuff set up in **componentDidMount**.
+
+For example, if you had a component that displays the weather data in your home town, you might have set it up to re-fetch the updated weather information every 10 seconds in **componentDidMount**. When the component gets deleted, you wouldn't want to continue doing this data-fetching, so you'd have to get rid of what was set up in **componentWillUnmount**.
+
 ## Summary
-If you need a lifecycle hook, there's one for your every need! Don't worry if you couldn't quite take it all in: we will go through all of these in detail in the next few modules.
+If you need a lifecycle hook, there's sute to be one for your every need!
 
 ### Mounting lifecycle methods
 Called once on initial render:
