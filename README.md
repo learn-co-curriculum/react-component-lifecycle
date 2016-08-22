@@ -31,7 +31,7 @@ React component lifecycle called **lifecycle hooks** or **lifecycle methods**. T
 how the component reacts or doesn't react to various changes in your app.
 
 These methods are called *lifecycle* methods, because they are called at different times in the components lifecycle - just
-before it's created, after it's created, when it's about to be deleted, when a user interaction has propted an internal
+before it's created, after it's created, when it's about to be deleted, when a user interaction has prompted an internal
 change etc.
 
 The only required method for a React component to be valid is the `render()` method which describes what the HTML for the
@@ -81,7 +81,12 @@ the updated weather information every 10 seconds in **componentDidMount**. When 
 want to continue doing this data-fetching, so you'd have to get rid of what was set up in **componentWillUnmount**.
 
 ## Summary
-If you need a lifecycle hook, there's sute to be one for your every need!
+Imagine a big old Oak tree. The Tree could be a parent component, each of its Branches is a child component of the Tree,
+each of its leaves a child component of the Branch and so on. Each of the Leaves go though a very obvious lifecycle of
+being created, changing based on state (changing colour based on the season, withering if there's not enough nutrition
+being passed down from the parent Branch, changing into a leaf with a hole bitten out of it if a caterpillar munches on it), and finally falling down when it's autumn.
+
+So as it seems, if you need a lifecycle hook, there's sure to be one for your every need!
 
 ### Mounting lifecycle methods
 Called once on initial render:
