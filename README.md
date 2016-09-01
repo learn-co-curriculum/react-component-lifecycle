@@ -40,10 +40,10 @@ component responds to change.
 ## Mounting
 When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is:
 essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting
-stage, there are two *lifecycle hooks* you can use: **componentWillMount** and **componentDidMount**. 
+stage, there are two *lifecycle hooks* you can use: `componentWillMount` and `componentDidMount`. 
 
-**componentWillMount** will get called just _before_ `render()` so you can use it to change the initial state if you need
-to, whereas **componentDidMount** will get called just _after_ the `render()` method. You would use this method to set up
+`componentWillMount` will get called just _before_ `render()` so you can use it to change the initial state if you need
+to, whereas `componentDidMount` will get called just _after_ the `render()` method. You would use this method to set up
 any long-running processes such as fetching and updating data.
 
 ## Updating
@@ -56,28 +56,28 @@ gets re-rendered as it needs to display an extra message. Whenever a re-render i
 lifecycle hooks that get called. You can choose to use any of these to decide how your React component should respond
 to changes.
 
-**componentWillReceiveProps** is invoked when the props the parent is passing into the component have changed. You could
+`componentWillReceiveProps` is invoked when the props the parent is passing into the component have changed. You could
 use this to change the component's state based on the new props.
 
-**shouldComponentUpdate** is invoked just before the component is about to re-render. At this stage, you can compare the
+`shouldComponentUpdate` is invoked just before the component is about to re-render. At this stage, you can compare the
 old and new props and state and prevent unnecessary re-renders: if the changes in state and/or props don't actually alter the
 component that's being shown to the user, there is no point "repainting" it as it is an unnecessary performance drain.
 
-**componentWillUpdate** is called just after **shouldComponentUpdate** has finished and just before the new component gets
+`componentWillUpdate` is called just after `shouldComponentUpdate` has finished and just before the new component gets
 rendered. You would usually use this method to update integrations with third party libraries.
 
-**componentDidUpdate** is called just after the new component had been rendered. You will have access to the previous props
+`componentDidUpdate` is called just after the new component had been rendered. You will have access to the previous props
 and state as well as the current ones, and you can use this method to update any third party libraries if they happen to
 need an update due to the re-render.
 
 ## Unmounting
 At the unmounting stage, the component gets deleted and cleared out of the page. The only lifecycle hook at this stage is
-**componentWillUnmount**, which is called just before the component gets deleted. This is used to clear out any stuff set
-up in **componentDidMount**.
+`componentWillUnmount`, which is called just before the component gets deleted. This is used to clear out any stuff set
+up in `componentDidMount`.
 
 For example, if you had a component that displays the weather data in your home town, you might have set it up to re-fetch
-the updated weather information every 10 seconds in **componentDidMount**. When the component gets deleted, you wouldn't
-want to continue doing this data-fetching, so you'd have to get rid of what was set up in **componentWillUnmount**.
+the updated weather information every 10 seconds in `componentDidMount`. When the component gets deleted, you wouldn't
+want to continue doing this data-fetching, so you'd have to get rid of what was set up in `componentWillUnmount`.
 
 ## Summary
 Imagine a big old oak tree. The tree could be a parent component, each of its branches a child component of the tree,
@@ -91,31 +91,31 @@ So as it seems, if you need a lifecycle hook, there's sure to be one for your ev
 ### Mounting lifecycle methods
 Called once on initial render:
 
-| Method             | nextProps | nextState | Can call this.setState | Called when?               | Used for                                                                                    |
+| Method             | nextProps | nextState | Can call `this.setState` | Called when?               | Used for                                                                                    |
 |--------------------|:---------:|:---------:|:----------------------:|:--------------------------:|:-------------------------------------------------------------------------------------------:|
-| **componentWillMount** |     no    |     no    |           yes          | once, just before mounting | setting initial state based on props                                                        |
-| **componentDidMount**  |     no    |     no    |           no           | once, just after mounting  | setting up side effects (e.g. creating new DOM elements or setting up asynchronous functions |
+| `componentWillMount` |     no    |     no    |           yes          | once, just before mounting | setting initial state based on props                                                        |
+| `componentDidMount`  |     no    |     no    |           no           | once, just after mounting  | setting up side effects (e.g. creating new DOM elements or setting up asynchronous functions |
 
 
 ### Updating lifecycle methods
 Not called on initial render, but always called whenever a subsequent re-render is triggered:
 
-|           Method          | nextProps | nextState | Can call this.setState |                       Called when?                      |                                     Used for                                     |
+|           Method          | nextProps | nextState | Can call `this.setState` |                       Called when?                      |                                     Used for                                     |
 |:-------------------------:|:---------:|:---------:|:----------------------:|:-------------------------------------------------------:|:--------------------------------------------------------------------------------:|
-| **componentWillReceiveProps** |    yes    |     no    |           yes          |  many times, whenever component is going to receive new props  |                     applying state changes based on new props                    |
-|   **shouldComponentUpdate**   |    yes    |    yes    |           no           |    many times, whenever a re-render has been triggered    |    deciding based on new & old props & state whether a re-render should occur    |
-|    **componentWillUpdate**    |    yes    |    yes    |           no           | many times, when new state and props are being received | prepare for the update, dispatch any actions or animations based on state change |
-|     **componentDidUpdate**    |    yes*   |    yes*   |           yes          |    many times, just after the re-render has finished    | any DOM updates following a render (mostly interacting with 3rd party libraries) |
+| `componentWillReceiveProps` |    yes    |     no    |           yes          |  many times, whenever component is going to receive new props  |                     applying state changes based on new props                    |
+|   `shouldComponentUpdate`   |    yes    |    yes    |           no           |    many times, whenever a re-render has been triggered    |    deciding based on new & old props & state whether a re-render should occur    |
+|    `componentWillUpdate`    |    yes    |    yes    |           no           | many times, when new state and props are being received | prepare for the update, dispatch any actions or animations based on state change |
+|     `componentDidUpdate`    |    yes*   |    yes*   |           yes          |    many times, just after the re-render has finished    | any DOM updates following a render (mostly interacting with 3rd party libraries) |
 
-\* **componentDidUpdate** will actually receive `prevProps` and `prevState` as arguments, as the newly applied state and props can be accessed through `this.props` and `this.state`.
+\* `componentDidUpdate` will actually receive `prevProps` and `prevState` as arguments, as the newly applied state and props can be accessed through `this.props` and `this.state`.
 
 
 ### Dismounting lifecycle method
 Called only once, just before the component is removed form the DOM:
 
-|        Method        | nextProps | nextState | Can call this.setState |                     Called when?                    |                         Used for                        |
+|        Method        | nextProps | nextState | Can call `this.setState` |                     Called when?                    |                         Used for                        |
 |:--------------------:|:---------:|:---------:|:----------------------:|:---------------------------------------------------:|:-------------------------------------------------------:|
-| **componentWillUnmount** |     no    |     no    |           no           | once, just before component is removed from the DOM | destroying any side effects set up in componentDidMount |
+| `componentWillUnmount` |     no    |     no    |           no           | once, just before component is removed from the DOM | destroying any side effects set up in componentDidMount |
 
 ## Resources
 
