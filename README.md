@@ -1,11 +1,17 @@
 # React Component Lifecycle
 
+## Overview 
+
+In this lesson, we'll describe the phases, as well as the importance, of the React component lifecycle. 
+
 ## Objectives
 
-1. Describe the phases of the React component lifecycle
-2. Explain the importance of different phases of the lifecycle
+1. Distinguish between props and states as they relate to React components 
+2. Describe the three phases of the React component lifecycle
+3. Define lifecycle methods and how they enable the component to react to different events
+4. Define and describe various lifecyclce methods
 
-## Overview
+## Component Lifecycle
 
 React components have two sets of properties: **props** and **state**. Props are given to the component by its
 parent. You can think of props as an external influence that the component has no control over, whereas a component's
@@ -15,7 +21,7 @@ user interacts with the component.
 The React framework was designed to enable developers to create complex and highly reactive UIs. This enables the
 components to quickly adapt to changes from user interactions or updates in the app. In order to enable this, React
 components go through what we call a **component lifecycle**. This is broadly divided into three parts: **creation**,
-**updating** and **deletion**.
+**updating**, and **deletion**.
 
 This means that every single thing you see in applications written in React is actually a React component and/or a part of
 one! For example, if you open a new chat window in a website written in React, a `ChatWindow` component is **created**.
@@ -30,7 +36,7 @@ In order to enable this quick reacting and updating, as a developer, you get acc
 React component lifecycle called **lifecycle hooks** or **lifecycle methods**. These are opportunities for you to change
 how the component reacts (or doesn't react) to various changes in your app.
 
-These methods are called *lifecycle* methods, because they are called at different times in the components lifecycle - just
+These methods are called *lifecycle* methods, because they are called at different times in the component's lifecycle - just
 before it's created, after it's created, and when it's about to be deleted.
 
 The only required method for a React component to be valid is the `render()` method which describes what the HTML for the
@@ -117,8 +123,6 @@ Called only once, just before the component is removed form the DOM:
 |:--------------------:|:---------:|:---------:|:----------------------:|:---------------------------------------------------:|:-------------------------------------------------------:|
 | `componentWillUnmount` |     no    |     no    |           no           | once, just before component is removed from the DOM | destroying any side effects set up in componentDidMount |
 
-## Suggested metaphors and narratives
-I think the use of a 'life and death' metaphor/narrative would work great here. We'll have to make sure we keep things light and friendly though, we don't want to dwell for too long on the more macabre stuff :smile:
 
 
 ## Resources
