@@ -52,7 +52,7 @@ At the unmounting stage, the component gets deleted and cleared out of the page.
 For example, if you had a component that displays the weather data in your home town, you might have set it up to re-fetch the updated weather information every 10 seconds in `componentDidMount`. When the component gets deleted, you wouldn't want to continue doing this data-fetching, so you'd have to get rid of what was set up in `componentWillUnmount`.
 
 ## Summary
-Imagine a big old oak tree. The tree could be a parent component, each of its branches a child component of the tree, each of its leaves a child component of the branch and so on. Each of the leaves go though a very obvious lifecycle of being created, changing based on state (changing colour based on the season, withering if there's not enough nutrition being passed down from the parent branch, changing into a leaf with a hole bitten out of it if a caterpillar munches on it), and finally falling down when it's autumn.
+Imagine a big old oak tree. The tree could be a parent component, each of its branches a child component of the tree, each of its leaves a child component of the branch and so on. Each of the leaves go through a very obvious lifecycle of being created, changing based on state (changing colour based on the season, withering if there's not enough nutrition being passed down from the parent branch, changing into a leaf with a hole bitten out of it if a caterpillar munches on it), and finally falling down when it's autumn.
 
 So as it seems, if you need a lifecycle hook, there's sure to be one for your every need!
 
@@ -91,3 +91,5 @@ Called only once, just before the component is removed form the DOM:
 
 - [React: Component Specs and Lifecycle](https://facebook.github.io/react/docs/component-specs.html)
 - [Understanding the React Component Lifecycle](http://busypeoples.github.io/post/react-component-lifecycle/)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-component-lifecycle'>Component Lifecycle</a> on Learn.co and start learning to code for free.</p>
