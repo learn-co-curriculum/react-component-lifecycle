@@ -9,7 +9,7 @@ In this lesson, we'll describe the phases, as well as the importance, of the Rea
 1. Distinguish between props and states as they relate to React components 
 2. Describe the three phases of the React component lifecycle
 3. Define lifecycle methods and how they enable the component to react to different events
-4. Define and describe various lifecyclce methods
+4. Define and describe various lifecycle methods
 
 ## Component Lifecycle
 
@@ -91,3 +91,5 @@ Called only once, just before the component is removed form the DOM:
 
 - [React: Component Specs and Lifecycle](https://facebook.github.io/react/docs/component-specs.html)
 - [Understanding the React Component Lifecycle](http://busypeoples.github.io/post/react-component-lifecycle/)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-component-lifecycle'>Component Lifecycle</a> on Learn.co and start learning to code for free.</p>
