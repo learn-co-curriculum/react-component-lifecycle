@@ -79,7 +79,7 @@ Not called on initial render, but always called whenever a subsequent re-render 
 
 
 ### Dismounting lifecycle method
-Called only once, just before the component is removed form the DOM:
+Called only once, just before the component is removed from the DOM:
 
 |        Method        | nextProps | nextState | Can call `this.setState` |                     Called when?                    |                         Used for                        |
 |:--------------------:|:---------:|:---------:|:----------------------:|:---------------------------------------------------:|:-------------------------------------------------------:|
