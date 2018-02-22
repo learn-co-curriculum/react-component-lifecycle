@@ -31,7 +31,7 @@ The only required method for a React component to be valid is the `render()` met
 ## Mounting
 When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are two *lifecycle hooks* you can use: `componentWillMount` and `componentDidMount`. 
 
-`componentWillMount` will get called just _before_ `render()` so you can use it to change the initial state if you need to, whereas `componentDidMount` will get called just _after_ the `render()` method. You would use this method to set up any long-running processes such as fetching and updating data.
+`componentWillMount` will get called just _before_ `render()`, whereas `componentDidMount` will get called just _after_ the `render()` method. You would use this method to set up any long-running processes such as fetching and updating data.
 
 ## Updating
 Whenever a component's state or props are changed, it gets re-rendered on the page. That's the beauty of React components - they're quick to *react* to changes. A re-render could be triggered when a user interacts with the component, or if new data (props or state) is passed in.
