@@ -28,14 +28,17 @@ These methods are called *lifecycle* methods, because they are called at differe
 
 The only required method for a React component to be valid is the `render()` method which describes what the HTML for the component looks like. There are a whole host of optional methods you can use if you need more control over how the component responds to change.
 
+## Pre-mounting
+It is important to remember that components, at their core, are just JS classes. This means that even before mounting is begun, the class's `constructor` function is called. 
+
+While the `constructor` is not a React lifecycle hook, it is the first method called upon the initialization of a component; this makes it useful for creating an initial state for a component.
+
 ## Mounting
-When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are three *lifecycle hooks* you can use: `constructor`, `componentWillMount`, and `componentDidMount`. 
+When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are two *lifecycle hooks* available to us: `componentWillMount`, and `componentDidMount`. 
 
-While the `constructor` is technically not a React lifecycle hook, it is important to understand that React Components are in fact just classes, and as with any class in JS, the first method called upon the initialization of an instance of any class is the `constructor`. It is useful for creating an initial state for a component.
+After the `constructor` is called, `componentWillMount` will get called just _before_ `render`. There is not much use for this hook - even [the React documentation](https://reactjs.org/docs/react-component.html#componentwillmount) mentions that anything you could do here is better done in either `constructor` or `componentDidMount`.
 
-After the `constructor` is called, `componentWillMount` will get called just _before_ `render()`. There is not much use for this hook - even [the React documentation](https://reactjs.org/docs/react-component.html#componentwillmount) mentions that anything you could do here is better done in either `constructor` or `componentDidMount`.
-
-`componentDidMount` will get called just _after_ the `render()` method. You would use this method to set up any long-running processes or asynchronous proceses such as fetching and updating data.
+`componentDidMount` will get called just _after_ the `render` method. You would use this method to set up any long-running processes or asynchronous proceses such as fetching and updating data.
 
 ## Updating
 Whenever a component's state or props are changed, it gets re-rendered on the page. That's the beauty of React components - they're quick to *react* to changes. A re-render could be triggered when a user interacts with the component, or if new data (props or state) is passed in.
