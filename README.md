@@ -31,7 +31,7 @@ The only required method for a React component to be valid is the `render()` met
 ## Mounting
 When the component is initially created, it gets "mounted" onto the DOM. It sounds more complicated than it is: essentially the component figures out its initial state and renders its initial HTML onto the page. At the mounting stage, there are three *lifecycle hooks* you can use: `constructor`, `componentWillMount`, and `componentDidMount`. 
 
-While the `constructor` is technically not a React lifecycle hook, it is important to understand that React Components are in fact just classes, and as with any class, the first method called upon the initialization of an instance of any class is the `constructor`. It is useful for creating an initial state for a component.
+While the `constructor` is technically not a React lifecycle hook, it is important to understand that React Components are in fact just classes, and as with any class in JS, the first method called upon the initialization of an instance of any class is the `constructor`. It is useful for creating an initial state for a component.
 
 After the `constructor` is called, `componentWillMount` will get called just _before_ `render()`. There is not much use for this hook - even [the React documentation](https://reactjs.org/docs/react-component.html#componentwillmount) mentions that anything you could do here is better done in either `constructor` or `componentDidMount`.
 
