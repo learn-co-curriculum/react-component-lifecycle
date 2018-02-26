@@ -70,7 +70,7 @@ Called once on initial render:
 |:-------------------------:|:---------:|:---------:|:----------------------:|:-------------------------------------------------------:|:--------------------------------------------------------------------------------:|
 | `constructor` |     no    |     no    |           no          | once, just before `componentWillMount` is called | Setting initial state                                             |
 | `componentWillMount` |     no    |     no    |           yes          | once, just before mounting | Not commonly used                                              |
-| `componentDidMount`  |     no    |     no    |           no           | once, just after mounting  | setting up side effects (e.g. creating new DOM elements or setting up asynchronous functions |
+| `componentDidMount`  |     no    |     no    |           yes           | once, just after mounting  | setting up side effects (e.g. creating new DOM elements or setting up asynchronous functions |
 
 
 ### Updating lifecycle methods
